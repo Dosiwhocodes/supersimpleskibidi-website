@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" x-data="{ 
+  cart: [], 
+  showCart: false,
+  currentSection: 'products',
+  setCurrentSection(section) { this.currentSection = section }
+}" x-cloak>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phân Bón Cà Mau - Official Store</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.13.3/cdn.min.js" defer></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <style>
+    [x-cloak] { display: none !important; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Roboto', sans-serif; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+      <img src="pvcfc.jpg" alt="Phân Bón Cà Mau Logo" class="h-12">
+      <nav class="space-x-6 text-[#006633] font-medium">
+        <a href="#products" @click="setCurrentSection('products')" :class="{ 'border-b-2 border-green-800 text-green-800': currentSection === 'products' }" class="hover:text-green-800">🌾 Sản phẩm</a>
+        <a href="#about" @click="setCurrentSection('about')" :class="{ 'border-b-2 border-green-800 text-green-800': currentSection === 'about' }" class="hover:text-green-800">ℹ️ Giới thiệu</a>
+        <a href="#farmer-support" @click="setCurrentSection('farmer-support')" :class="{ 'border-b-2 border-green-800 text-green-800': currentSection === 'farmer-support' }" class="hover:text-green-800">🤝 Đồng hành cùng nhà nông</a>
+        <a href="#news" @click="setCurrentSection('news')" :class="{ 'border-b-2 border-green-800 text-green-800': currentSection === 'news' }" class="hover:text-green-800">📰 Tin tức</a>
+        <a href="#investor" @click="setCurrentSection('investor')" :class="{ 'border-b-2 border-green-800 text-green-800': currentSection === 'investor' }" class="hover:text-green-800">💼 Quan hệ nhà đầu tư</a>
+        <a href="#sustainability" @click="setCurrentSection('sustainability')" :class="{ 'border-b-2 border-green-800 text-green-800': currentSection === 'sustainability' }" class="hover:text-green-800">🌍 Phát triển bền vững</a>
+      </nav>
+      <button @click="showCart = true" class="text-[#006633] font-semibold hover:text-green-800 transition-all">🛒 Giỏ hàng (<span x-text="cart.length"></span>)</button>
+    </div>
+  </header>
+
+  <!-- Cart Modal -->
+  <div x-show="showCart" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" @click.outside="showCart = false">
+    <div class="bg-white p-6 rounded-2xl shadow-2xl w-full max-w-lg max-h-[80vh] overflow-y-auto">
+      <h2 class="text-2xl font-bold text-[#006633] mb-4">🛒 Giỏ hàng</h2>
+      <template x-if="cart.length === 0">
+        <p class="text-gray-600">😔 Giỏ hàng trống</p>
+      </template>
+      <template x-for="(item, index) in cart" :key="index">
+        <div class="flex justify-between items-center border-b py-2">
+          <div>
+            <h3 class="font-semibold text-[#006633]" x-text="item.name"></h3>
+            <p class="text-gray-600" x-text="item.desc"></p>
+          </div>
+          <button @click="cart.splice(index, 1)" class="text-red-500 hover:text-red-700">🗑️ Xóa</button>
+        </div>
+      </template>
+      <div class="mt-4 flex justify-end">
+        <button @click="showCart = false" class="bg-gray-500 text-white px-4 py-2 rounded-full mr-2 hover:bg-gray-600">🔙 Đóng</button>
+        <button class="bg-[#006633] text-white px-4 py-2 rounded-full hover:bg-green-700">💳 Thanh toán</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <section class="bg-gradient-to-r from-green-50 to-green-100 py-20 text-center">
+    <h1 class="text-4xl md:text-5xl font-bold text-[#006633] mb-6">
+      Chào mừng đến với <span class="text-green-800">🌱 Phân Bón Cà Mau</span>
+    </h1>
+    <p class="max-w-2xl mx-auto text-lg text-gray-600">
+      Nơi cung cấp các sản phẩm phân bón chất lượng cao, góp phần vào một nền nông nghiệp bền vững. 🌾
+    </p>
+  </section>
+
+  <!-- Products -->
+  <section id="products" class="py-20">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-center text-3xl font-bold text-[#006633] mb-10">🌟 Sản phẩm nổi bật</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+        <template x-for="product in [
+          { name: 'Đạm Cà Mau', img: 'dam.jpg', desc: 'Phân đạm cao cấp cho năng suất vượt trội. 🚀' },
+          { name: 'NPK Cà Mau', img: 'npk.jpg', desc: 'Phù hợp cho nhiều loại cây trồng. 🌾' },
+          { name: 'Kali Cà Mau', img: 'kali.jpg', desc: 'Giúp cây phát triển mạnh và bền vững. 💪' },
+          { name: 'Hữu cơ Cà Mau', img: 'huuco.jpg', desc: 'Sản phẩm hữu cơ thân thiện với môi trường. 🌍' },
+          { name: 'Bio Cà Mau (vi sinh)', img: 'bio.jpg', desc: 'Phân vi sinh giúp cải tạo đất và tăng cường sức đề kháng. 🦠' }
+        ]" :key="product.name">
+          <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all p-6">
+            <img :src="product.img" :alt="product.name" class="rounded-lg w-full h-56 object-cover mb-4">
+            <h3 class="text-xl font-semibold text-[#006633] mb-2" x-text="product.name"></h3>
+            <p class="text-gray-600 mb-4" x-text="product.desc"></p>
+            <button @click="cart.push(product)" class="bg-[#006633] text-white px-6 py-2 rounded-full hover:bg-green-700">
+              🛒 Thêm vào giỏ
+            </button>
+          </div>
+        </template>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="py-20 bg-white text-center">
+    <div class="max-w-4xl mx-auto px-4">
+      <h2 class="text-3xl font-bold text-[#006633] mb-6">ℹ️ Về chúng tôi</h2>
+      <p class="text-gray-700">
+        Công ty Phân Bón Cà Mau tự hào là đơn vị hàng đầu trong lĩnh vực cung cấp phân bón chất lượng cao. 🌟
+        Với sứ mệnh đồng hành cùng nhà nông, chúng tôi không ngừng nghiên cứu và phát triển để mang đến giải pháp tối ưu cho nền nông nghiệp Việt Nam. 🇻🇳
+      </p>
+    </div>
+  </section>
+
+  <!-- Farmer Support -->
+  <section id="farmer-support" class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-center text-3xl font-bold text-[#006633] mb-10">🤝 Đồng hành cùng nhà nông</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-gray-50 rounded-2xl shadow-md p-6">
+          <h3 class="text-xl font-semibold text-[#006633] mb-4">🛠️ Hỗ trợ kỹ thuật</h3>
+          <img src="dinhduongeznha.jpg" class="card-img-top" alt="Hình báo">
+          <p class="text-gray-600">Cung cấp tư vấn kỹ thuật miễn phí về cách sử dụng phân bón hiệu quả cho từng loại cây trồng. 🌱</p>
+          <a href="báo3.html" class="btn btn-sm btn-primary">Đọc tiếp</a>
+        </div>
+        <div class="bg-gray-50 rounded-2xl shadow-md p-6">
+          <h3 class="text-xl font-semibold text-[#006633] mb-4">📚 Chương trình khuyến nông</h3>
+          <img src="hoithaoez.jpg" class="card-img-top" alt="Hình báo">
+          <p class="text-gray-600">Tổ chức các buổi hội thảo và chương trình thực tế để nâng cao kiến thức nông nghiệp. 🎓</p>
+          <a href="báo4.html" class="btn btn-sm btn-primary">Đọc tiếp</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- News -->
+  <section id="news" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-center text-3xl font-bold text-[#006633] mb-10">📰 Tin tức</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-gray-50 rounded-2xl shadow-md p-6">
+          <h3 class="text-xl font-semibold text-[#006633] mb-2">🚀 Ra mắt sản phẩm mới</h3>
+          <img src="phanbonvisinh.jpg" class="card-img-top" alt="Hình báo">
+          <p class="text-gray-600">Phân bón vi sinh Bio Cà Mau chính thức ra mắt, mang lại giải pháp bền vững. 🌿</p>
+          <a href="báo1.html" class="btn btn-sm btn-primary">Đọc tiếp</a>
+        </div>
+        <div class="bg-gray-50 rounded-2xl shadow-md p-6">
+          <h3 class="text-xl font-semibold text-[#006633] mb-2">🎤 Hội thảo nông nghiệp</h3>
+          <img src="hoithaoncanhtac.jpg" class="card-img-top" alt="Hình báo">
+          <p class="text-gray-600">Hội thảo về canh tác bền vững được tổ chức tại Cà Mau vào tháng tới. 📅</p>
+          <a href="báo2.html" class="btn btn-sm btn-primary">Đọc tiếp</a>
+        </div>
+        <div class="bg-gray-50 rounded-2xl shadow-md p-6">
+          <h3 class="text-xl font-semibold text-[#006633] mb-2">🏆 Giải thưởng nông nghiệp</h3>
+          <img src="pvcfcnhandoanhnghiepxanh.jpg" class="card-img-top" alt="Hình báo">
+          <p class="text-gray-600">Phân Bón Cà Mau nhận giải thưởng Doanh nghiệp Xanh 2025. 🌍</p>
+          <a href="báo5.html" class="btn btn-sm btn-primary">Đọc tiếp</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Investor -->
+  <section id="investor" class="py-20 bg-gray-50 text-center">
+    <div class="max-w-4xl mx-auto px-4">
+      <h2 class="text-3xl font-bold text-[#006633] mb-6">💼 Quan hệ nhà đầu tư</h2>
+      <p class="text-gray-700 mb-4">Chúng tôi cam kết minh bạch và cung cấp thông tin kịp thời cho các nhà đầu tư. 📊</p>
+      <img src="quanhenhadautu.jpg" class="card-img-top" alt="Hình báo">
+      <div class="card-body">
+        <h5 class="text-3xl font-bold text-[#006633] mb-6">TỔNG QUAN QUAN HỆ NHÀ ĐẦU TƯ</h5>
+        <p class="card-text">1. Tổng quan về công ty, 2. Kết quả kinh doanh 6 tháng đầu năm 2025, 3. Yếu tố thúc đẩy tăng trưởng, 4. Chiến lược và dự án đầu tư, 5. Quản trị và cổ tức, 6. Chuyển đổi số và bền vững, 7. Triển vọng và khuyến nghị, 8. Liên hệ quan hệ cổ đông
+          Người phụ trách: Đỗ Thành Hưng.
+          Liên hệ: Tel: 02 903819000 (ext 570), Mobile: 0913897704, Email: ir@pvcfc.com.vn.</p>
+        <a href="báo6.html" class="btn btn-sm btn-primary">Đọc tiếp</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sustainability -->
+  <section id="sustainability" class="py-20 bg-white text-center">
+    <div class="max-w-4xl mx-auto px-4">
+      <h2 class="text-3xl font-bold text-[#006633] mb-6">🌍 Phát triển bền vững</h2>
+      <p class="text-gray-700">Phân Bón Cà Mau cam kết phát triển các sản phẩm thân thiện với môi trường, góp phần bảo vệ đất nông nghiệp và nguồn nước. 💧</p>
+      <div class="card">
+        <img src="phattrienbenvung.jpg" class="card-img-top" alt="Hình báo">
+        <div class="card-body">
+            <h5 class="text-3xl font-bold text-[#006633] mb-6">TỔNG QUAN BÁO CÁO PHÁT TRIỂN BỀN VỮNG</h5>
+            <p class="card-text">Báo cáo Phát triển bền vững của PVCFC năm 2023 bao gồm các thông tin liên quan đến cam kết/chính sách, phương pháp quản trị,...</p>
+            <a href="báo7.html" class="btn btn-sm btn-primary">Đọc tiếp</a>
+        </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-[#006633] text-white py-8 text-center">
+    <div class="mb-4">
+      <a href="#" class="text-2xl mx-3 hover:text-green-200"><i class="bi bi-facebook"></i></a>
+      <a href="#" class="text-2xl mx-3 hover:text-green-200"><i class="bi bi-twitter-x"></i></a>
+      <a href="#" class="text-2xl mx-3 hover:text-green-200"><i class="bi bi-youtube"></i></a>
+    </div>
+    <p>&copy; 2025 Phân Bón Cà Mau. All rights reserved. 🌱</p>
+  </footer>
+</body>
+</html>
